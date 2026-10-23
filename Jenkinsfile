@@ -17,6 +17,12 @@ pipeline {
                 sh 'mkdir -p build && date > build/version.txt'
             }
         }
+        stage('Docker Build') { 
+            steps {
+                sh 'docker build -t jenkins-demo:${BUILD_NUMBER} .'
+                sh 'docker images | grep jenkins-demo'
+            } 
+        } 
         stage('Test') {
             steps {
                 sh 'test -f build/version.txt && echo "Tests passed"'
